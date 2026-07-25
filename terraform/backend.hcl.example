@@ -1,0 +1,9 @@
+# Copy this file to backend.hcl (gitignored) and fill in your own values.
+# Then run: terraform init -backend-config=backend.hcl
+#
+# This file is intentionally NOT committed with real values, to avoid
+# exposing account-specific info (bucket name, region) in a public repo.
+
+bucket = "your-tfstate-bucket-name"
+key    = "mcp-zebra/terraform.tfstate"
+region = "eu-west-1"

@@ -1,1 +1,26 @@
 /.idea/
+
+# Node
+node_modules/
+npm-debug.log*
+
+# Build output
+/dist/
+/build/
+
+# Terraform
+terraform/.terraform/
+terraform/*.tfstate
+terraform/*.tfstate.*
+terraform/*.tfplan
+terraform/crash.log
+terraform/override.tf
+terraform/override.tf.json
+terraform/*_override.tf
+terraform/*_override.tf.json
+terraform/backend.hcl
+
+# Env / local
+.env
+.env.*
+*.local

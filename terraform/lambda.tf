@@ -40,7 +40,7 @@ resource "aws_lambda_function" "mcp_server" {
   source_code_hash = filebase64sha256(local.lambda_zip)
 
   handler       = "index.handler"
-  runtime       = "nodejs20.x"
+  runtime       = "nodejs22.x"
   architectures = ["arm64"]
 
   memory_size = var.lambda_memory_size

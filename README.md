@@ -1,5 +1,11 @@
 # mcp-zebra
 
+![Node.js](https://img.shields.io/badge/Node.js-22%2B-339933?logo=nodedotjs&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.7-3178C6?logo=typescript&logoColor=white)
+![AWS Lambda](https://custom-icon-badges.demolab.com/badge/AWS%20Lambda-232F3E?logo=aws&logoColor=white)
+![Terraform](https://img.shields.io/badge/Terraform-%3E%3D1.5-844FBA?logo=terraform&logoColor=white)
+![MCP](https://img.shields.io/badge/MCP-Server-000000?logo=modelcontextprotocol&logoColor=white)
+
 An [MCP](https://modelcontextprotocol.io) server exposing barcode/GTIN tools, deployed as an
 AWS Lambda function behind an API Gateway HTTP API, provisioned with Terraform.
 
@@ -19,7 +25,7 @@ during testing.
 
 ## Architecture
 
-- **Runtime**: Node.js 20, TypeScript, bundled to a single CommonJS file with esbuild.
+- **Runtime**: Node.js 22, TypeScript, bundled to a single CommonJS file with esbuild.
 - **MCP transport**: [`@modelcontextprotocol/sdk`](https://github.com/modelcontextprotocol/typescript-sdk)'s
   `WebStandardStreamableHTTPServerTransport`, used directly with the Fetch API `Request`/`Response`
   objects — no Express, no Lambda web-adapter layer. `src/lambda.ts` adapts API Gateway's
@@ -50,7 +56,7 @@ esbuild.config.mjs      # bundles src/lambda.ts -> dist/index.js (+ copies the .
 
 ## Prerequisites
 
-- Node.js 20+
+- Node.js 22+
 - Terraform >= 1.5
 - An AWS account/credentials configured (e.g. via `aws configure` or environment variables) with
   permission to create Lambda, API Gateway, IAM and CloudWatch Logs resources.
@@ -122,3 +128,14 @@ terraform apply -var="aws_region=eu-west-1" -var="stage_name=dev"
   invocations. This matches the SDK's documented stateless-HTTP pattern and sidesteps known bugs
   around reusing a stateless transport across requests; the cost (re-registering four tools) is
   negligible next to Lambda's own cold-start overhead.
+
+## Node.js version
+
+The Lambda function targets `nodejs22.x` (`terraform/lambda.tf`), currently the newest
+AWS Lambda-managed Node.js runtime. AWS Lambda's minimum supported runtime is `nodejs20.x`
+(`nodejs18.x` and older have reached end-of-support and can no longer be created or updated).
+Track supported/deprecated runtimes at the
+[AWS Lambda runtimes docs](https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html) —
+each runtime is deprecated roughly in line with the corresponding Node.js version's own
+[upstream end-of-life](https://github.com/nodejs/release#release-schedule), after which AWS stops
+patching it (functions keep running, but on an unmaintained runtime).

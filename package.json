@@ -5,7 +5,7 @@
   "description": "MCP server exposing barcode tools (GTIN validation, GTIN generation, barcode decoding, barcode image generation), deployed as an AWS Lambda behind API Gateway.",
   "type": "module",
   "engines": {
-    "node": ">=20"
+    "node": ">=22"
   },
   "scripts": {
     "dev": "tsx watch src/local.ts",
@@ -24,7 +24,7 @@
   },
   "devDependencies": {
     "@types/aws-lambda": "^8.10.150",
-    "@types/node": "^20.14.10",
+    "@types/node": "^22.10.2",
     "esbuild": "^0.28.1",
     "tsx": "^4.19.2",
     "typescript": "^5.7.3"

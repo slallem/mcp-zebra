@@ -1,0 +1,32 @@
+{
+  "name": "mcp-zebra",
+  "version": "0.1.0",
+  "private": true,
+  "description": "MCP server exposing barcode tools (GTIN validation, GTIN generation, barcode decoding, barcode image generation), deployed as an AWS Lambda behind API Gateway.",
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "dev": "tsx watch src/local.ts",
+    "typecheck": "tsc --noEmit",
+    "build": "node esbuild.config.mjs",
+    "package": "npm run build && mkdir -p build && cd dist && zip -q -r ../build/lambda.zip index.js index.js.map zxing_full.wasm",
+    "clean": "rm -rf dist build",
+    "tf:init": "cd terraform && terraform init -backend-config=backend.hcl",
+    "tf:plan": "npm run package && cd terraform && terraform plan",
+    "tf:apply": "npm run package && cd terraform && terraform apply"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.24.3",
+    "zod": "^3.25.76",
+    "zxing-wasm": "^3.1.2"
+  },
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.150",
+    "@types/node": "^22.10.2",
+    "esbuild": "^0.28.1",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.3"
+  }
+}

@@ -18,7 +18,7 @@
     "tf:apply": "npm run package && cd terraform && terraform apply"
   },
   "dependencies": {
-    "@modelcontextprotocol/sdk": "^1.24.3",
+    "@modelcontextprotocol/sdk": "^1.32.0",
     "zod": "^3.25.76",
     "zxing-wasm": "^3.1.2"
   },
